@@ -1,6 +1,6 @@
 import { Box, Flex, Text, Grid } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import { useData } from "./DataProvider";
+import React, { useEffect } from "react";
+import { useData } from "./DataProvider"; 
 import {
   IInterViewSettings,
   IJobDetails,
@@ -51,13 +51,14 @@ const PreviewCard: React.FC<{
   jobDetails?: IJobDetails;
   interviewSettings?: IInterViewSettings;
 }> = ({ requisitionDetails, jobDetails, interviewSettings }) => {
-  const { state } = useData();
+  const { state } = useData(); 
 
   useEffect(() => {}, [
     state.requisitionDetails,
     state.jobDetails,
     state.interviewSettings,
   ]);
+
   return (
     <Box p="1rem">
       <Box borderRadius="10px" bgColor="gray.100" height="fit-content">
@@ -122,16 +123,26 @@ const PreviewCard: React.FC<{
           </DataCard>
 
           <DataCard title="Job Detail">
-            <KeyValue title="Job Title" value={jobDetails?.jobTitle} />
-            <KeyValue title="Job Details" value={jobDetails?.jobDetails} />
-            <KeyValue title="Job Location" value={jobDetails?.jobLocation} />
+            <KeyValue title="Job Title" value={state.jobDetails.jobTitle} />{" "}
+            
+            <KeyValue
+              title="Job Details"
+              value={state.jobDetails.jobDetails}
+            />{" "}
+            
+            <KeyValue
+              title="Job Location"
+              value={state.jobDetails.jobLocation}
+            />{" "}
+            
           </DataCard>
           <DataCard title="Interview Settings">
             <KeyValue
               title="Interview Duration"
               value={
                 interviewDurationOptions.find(
-                  (item) => item?.value === interviewSettings?.interviewDuration
+                  (item) =>
+                    item?.value === state.interviewSettings?.interviewDuration
                 )?.label
               }
             />
@@ -139,7 +150,8 @@ const PreviewCard: React.FC<{
               title="Interview Language"
               value={
                 interviewLanguageOptions.find(
-                  (item) => item?.value === interviewSettings?.interviewLanguage
+                  (item) =>
+                    item?.value === state.interviewSettings?.interviewLanguage
                 )?.label
               }
             />
@@ -147,7 +159,8 @@ const PreviewCard: React.FC<{
               title="Interview Mode"
               value={
                 interviewModeOptions.find(
-                  (item) => item?.value === interviewSettings?.interviewMode
+                  (item) =>
+                    item?.value === state.interviewSettings?.interviewMode
                 )?.label
               }
             />

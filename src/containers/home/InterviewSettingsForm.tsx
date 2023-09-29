@@ -9,10 +9,12 @@ import {
   interviewLanguageOptions,
   interviewModeOptions,
 } from "./constants";
+import { useData } from "./DataProvider";
 
 const InterviewDetailsForm: React.FC<{
   handleTab: (n: PageNumbers) => void;
 }> = ({ handleTab }) => {
+  const { state, setState } = useData();
   const {
     errors,
     touched,
@@ -27,6 +29,11 @@ const InterviewDetailsForm: React.FC<{
       interviewLanguage: "",
     },
     onSubmit: (values) => {
+      setState((prevState) => ({
+        ...prevState,
+        interviewSettings: values,
+      }));
+
       console.log({ values });
       alert("Form successfully submitted");
     },
