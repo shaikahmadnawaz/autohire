@@ -1,5 +1,6 @@
 import { Box, Flex, Text, Grid } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useData } from "./DataProvider";
 import {
   IInterViewSettings,
   IJobDetails,
@@ -50,10 +51,13 @@ const PreviewCard: React.FC<{
   jobDetails?: IJobDetails;
   interviewSettings?: IInterViewSettings;
 }> = ({ requisitionDetails, jobDetails, interviewSettings }) => {
-  useEffect(() => {
-    // This block will run whenever any of the form data props change.
-    // You can update the preview here based on the new data.
-  }, [requisitionDetails, jobDetails, interviewSettings]);
+  const { state } = useData();
+
+  useEffect(() => {}, [
+    state.requisitionDetails,
+    state.jobDetails,
+    state.interviewSettings,
+  ]);
   return (
     <Box p="1rem">
       <Box borderRadius="10px" bgColor="gray.100" height="fit-content">
@@ -84,14 +88,14 @@ const PreviewCard: React.FC<{
               alignItems="center"
             >
               <Text fontSize="0.9rem" fontWeight="500">
-                {requisitionDetails?.requisitionTitle}
+                {state.requisitionDetails.requisitionTitle}
               </Text>
               <Flex justifyContent="space-around" alignItems="center">
                 <Text fontSize="0.8rem" mr="0.4rem" fontWeight="200" as="p">
                   OPENINGS
                 </Text>
                 <Text fontSize="1rem" fontWeight="bold" as="span">
-                  {requisitionDetails?.noOfOpenings}
+                  {state.requisitionDetails.noOfOpenings}
                 </Text>
               </Flex>
             </Flex>
@@ -103,7 +107,7 @@ const PreviewCard: React.FC<{
               title="Urgency"
               value={
                 urgencyOptions.find(
-                  (item) => item?.value === requisitionDetails?.urgency
+                  (item) => item?.value === state.requisitionDetails?.urgency
                 )?.label
               }
             />
@@ -111,11 +115,12 @@ const PreviewCard: React.FC<{
               title="Gender"
               value={
                 genderOptions.find(
-                  (item) => item?.value === requisitionDetails?.gender
+                  (item) => item?.value === state.requisitionDetails?.gender
                 )?.label
               }
             />
           </DataCard>
+
           <DataCard title="Job Detail">
             <KeyValue title="Job Title" value={jobDetails?.jobTitle} />
             <KeyValue title="Job Details" value={jobDetails?.jobDetails} />
